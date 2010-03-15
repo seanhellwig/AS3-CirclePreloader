@@ -1,0 +1,41 @@
+AS3-CirclePreloader
+
+A basic class that displays a dynamically drawn circle outline based on a percentage passed in.
+
+I hope somebody finds this useful!
+
+
+
+BASIC USAGE:
+
+package{
+	import flash.display.Sprite;
+	import com.seanhellwig.utils.SimpleImageRotator;
+	import com.seanhellwig.events.RotatorEvent;
+	
+	public class BasicRotatorExample extends Sprite{
+		
+		public function BasicRotatorExample(){
+			// static xml for demonstration purposes, you may alternitively load an external xml file
+			var xmlData:String = (<![CDATA[
+				<data>
+					<item>
+						<img src="http://farm3.static.flickr.com/2740/4101129542_d3e9ae80f4.jpg" href="http://www.flickr.com/photos/livenature/4101129542/" />
+						<img src="http://farm4.static.flickr.com/3348/3597961937_e22102f38a.jpg" href="http://www.flickr.com/photos/trodel/3597961937/" />
+						<img src="http://farm2.static.flickr.com/1311/1057382329_8813502b03.jpg" href="http://www.flickr.com/photos/araswami/1057382329/" />
+					</item>
+				</data>
+				]]>).toString();
+
+			var _xml:XML = new XML(xmlData);
+
+			var _imageRotator:SimpleImageRotator = new SimpleImageRotator(_xml.item[0]);
+			_imageRotator.addEventListener(RotatorEvent.LOAD_COMPLETE, function(e:Event){addChild(_imageRotator)});
+			_imageRotator.addEventListener(RotatorEvent.ITEM_CHANGED, itemChanged);
+		}
+		
+		function itemChanged(e:RotatorEvent){
+			trace("width: " + e.item.width + " / height: " + e.item.height);
+		}
+	}
+}
